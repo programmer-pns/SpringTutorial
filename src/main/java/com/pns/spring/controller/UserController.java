@@ -16,7 +16,6 @@ import com.pns.spring.service.UserService;
 @RequestMapping( "user")
 public class UserController {
 	
-	
 	//Dependency Injection
 	@Autowired
 	private UserService userService;

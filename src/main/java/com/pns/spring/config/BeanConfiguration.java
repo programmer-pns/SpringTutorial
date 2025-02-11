@@ -13,4 +13,5 @@ public class BeanConfiguration {
 	UserService getUserService() {
 		return new UserServiceMySqlImpl();
 	}
+	
 }
