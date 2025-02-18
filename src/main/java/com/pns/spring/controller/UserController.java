@@ -1,6 +1,9 @@
 package com.pns.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +24,12 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping("login")
-	public LoginResponseDto doLogin(@RequestBody(required = true) LoginRequestDto loginRequest) {
-		return userService.doLogin(loginRequest);
+	public ResponseEntity<LoginResponseDto> doLogin(@RequestBody(required = true) LoginRequestDto loginRequest) {
+		
+		LoginResponseDto loginResponse = userService.doLogin(loginRequest);
+		ResponseEntity<LoginResponseDto> responseDto = new ResponseEntity<>(loginResponse,HttpStatus.OK);
+		
+		return responseDto;
 	}
 	
 }

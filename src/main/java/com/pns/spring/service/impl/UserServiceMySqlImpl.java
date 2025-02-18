@@ -1,9 +1,12 @@
 package com.pns.spring.service.impl;
 
-import java.util.List;
+import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
+import com.pns.spring.LoginException;
 import com.pns.spring.dto.request.LoginRequestDto;
 import com.pns.spring.dto.response.LoginResponseDto;
 import com.pns.spring.entity.UserEntity;
@@ -18,19 +21,6 @@ public class UserServiceMySqlImpl implements UserService{
 	@Override
 	public LoginResponseDto doLogin(LoginRequestDto loginRequest) {
 		
-//		List<UserEntity> users = userRepo.findAll(); //select * from ---
-//		UserEntity user = userRepo.getById(1L); //select * from --- where id=1;
-//		
-		UserEntity newUser = new UserEntity();
-		newUser.setEmail("pns120@gmail.com");
-		newUser.setEnabled(false);
-		newUser.setUsername("hi");
-		
-		
-		newUser = userRepo.save(newUser); //INSERT 
-		
-		System.out.println(newUser.getId());
-		
 		LoginResponseDto responseDto = new LoginResponseDto();
 		if(loginRequest.getUserName().contentEquals("admin") &&
 				loginRequest.getPassword().contentEquals("password")) {
@@ -40,8 +30,7 @@ public class UserServiceMySqlImpl implements UserService{
 			responseDto.setUsername(loginRequest.getUserName());
 			return responseDto;
 		}
-		responseDto.setUsername(loginRequest.getUserName());
-		return responseDto;
+		throw new LoginException("Invalid login credentials",HttpStatus.UNAUTHORIZED);
 	}
 
 	
